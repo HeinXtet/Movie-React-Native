@@ -12,6 +12,7 @@ import IconM from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux';
 import { searchMovie } from '../store/actions/search/searchAction'
 import {Navigation} from 'react-native-navigation'
+import { primaryColor } from '../utils/constant';
 class Search extends React.PureComponent {
 
 
@@ -26,7 +27,7 @@ class Search extends React.PureComponent {
 
     render() {
         return (
-            <SafeAreaView style={{ backgroundColor: 'red', flex: 1, flexDirection: 'column' }}>
+            <SafeAreaView style={{ backgroundColor: primaryColor, flex: 1, flexDirection: 'column' }}>
                 <TopBar title='Search' humbergerPress={() => openDrawer()} />
                 <View style={styles.container}>
                     <Text>Detail</Text>
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     topBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'red',
+        backgroundColor: 'black',
         width: "100%",
         height: 50,
 

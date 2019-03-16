@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
+import { primaryColor } from '../utils/constant'
 
 
 class TopBar extends React.PureComponent {
@@ -11,7 +12,11 @@ class TopBar extends React.PureComponent {
     render() {
         return (
             <View style={styles.topBar}>
-                <TouchableOpacity style={{ margin: 8, zIndex: 2 }} onPress={this.props.humbergerPress} ><IconM name='menu' size={30} color='white' /></TouchableOpacity>
+                <TouchableOpacity
+                    style={{ margin: 8, zIndex: 2 }}
+                    onPress={this.props.humbergerPress} >
+                    <IconM name='menu' size={30} color='white' />
+                </TouchableOpacity>
                 <Text style={{
                     flex: 1,
                     color: 'white',
@@ -21,6 +26,13 @@ class TopBar extends React.PureComponent {
                     position: 'absolute', fontSize: 16
                     , textAlign: 'center'
                 }}>{this.props.title}</Text>
+                <View style={{ width: '100%', position: 'absolute', zIndex: 1 }}>
+                    <TouchableOpacity
+                        style={{ margin: 8, zIndex: 2, alignSelf: 'flex-end' }}
+                        onPress={this.props.humbergerPress} >
+                        <IconM name='search' size={30} color='white' />
+                    </TouchableOpacity>
+                </View>
 
             </View>
         )
@@ -32,7 +44,7 @@ const styles = StyleSheet.create({
     topBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'red',
+        backgroundColor: primaryColor,
         width: "100%",
         height: 50,
 

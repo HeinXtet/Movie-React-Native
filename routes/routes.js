@@ -1,5 +1,5 @@
 import { Navigation } from "react-native-navigation";
-
+import {primaryColor,primaryDarkColor} from '../utils/constant'
 export const hideTopBar = (componentId) => {
     Navigation.mergeOptions(componentId, {
         topBar: {
@@ -8,16 +8,15 @@ export const hideTopBar = (componentId) => {
     })
 }
 
+
+
 export const openDrawer = () => {
     Navigation.mergeOptions('sideDrawer', {
         sideMenu: {
             openGestureMode: 'entireScreen',
             left: {
-                
                 visible: true,
                 enabled: true,
-                
-
             }
         }
     })
@@ -54,6 +53,7 @@ export const goMain = () => Navigation.setRoot({
             },
             center: {
                 bottomTabs: {
+                    
                     id: 'BottomTabsId',
                     children: [
                         {
@@ -65,14 +65,14 @@ export const goMain = () => Navigation.setRoot({
                                             name: 'home',
                                             options: {
                                                 topBar: {
-                                                    visible : false,
-                                                    height : 0
+                                                    visible: false,
+                                                    height: 0
                                                 },
                                                 bottomTab: {
                                                     fontSize: 12,
                                                     text: 'Home',
-                                                    selectedTextColor: 'white',
-                                                    selectedIconColor: 'white',
+                                                    selectedTextColor: primaryDarkColor,
+                                                    selectedIconColor: primaryDarkColor,
                                                     textColor: 'white',
                                                     icon: {
                                                         uri: 'baseline_home_24'
@@ -81,6 +81,7 @@ export const goMain = () => Navigation.setRoot({
                                             }
                                         },
                                     },
+
                                 ]
                             }
                         },
@@ -93,15 +94,15 @@ export const goMain = () => Navigation.setRoot({
                                             name: 'series',
                                             options: {
                                                 topBar: {
-                                                    visible : false,
-                                                    height : 0
+                                                    visible: false,
+                                                    height: 0
                                                 },
                                                 bottomTab: {
                                                     text: 'Series',
                                                     textColor: 'white',
                                                     fontSize: 12,
-                                                    selectedTextColor: 'white',
-                                                    selectedIconColor: 'white',
+                                                    selectedTextColor: primaryDarkColor,
+                                                    selectedIconColor: primaryDarkColor,
                                                     icon: {
                                                         uri: 'baseline_search_24'
                                                     }
@@ -121,15 +122,15 @@ export const goMain = () => Navigation.setRoot({
                                             name: 'search',
                                             options: {
                                                 topBar: {
-                                                    visible : false,
-                                                    height : 0
+                                                    visible: false,
+                                                    height: 0
                                                 },
                                                 bottomTab: {
                                                     text: 'Search',
                                                     fontSize: 12,
                                                     textColor: "white",
-                                                    selectedTextColor: 'white',
-                                                    selectedIconColor: 'white',
+                                                    selectedTextColor: primaryDarkColor,
+                                                    selectedIconColor: primaryDarkColor,
                                                     icon: {
                                                         uri: 'baseline_home_24'
                                                     }
