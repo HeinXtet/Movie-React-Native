@@ -1,5 +1,5 @@
 import { Navigation } from "react-native-navigation";
-import {primaryColor,primaryDarkColor} from '../utils/constant'
+import { primaryColor, primaryDarkColor } from '../utils/constant'
 export const hideTopBar = (componentId) => {
     Navigation.mergeOptions(componentId, {
         topBar: {
@@ -48,12 +48,12 @@ export const goMain = () => Navigation.setRoot({
             id: 'sideDrawer',
             left: {
                 component: {
-                    name: 'app'
+                    name: 'slidebar'
                 }
             },
             center: {
                 bottomTabs: {
-                    
+
                     id: 'BottomTabsId',
                     children: [
                         {

@@ -1,9 +1,10 @@
 
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 
 export const primaryColor = "#546E7A"
 export const primaryDarkColor = "#263238"
+export const baseImgPth = 'http://image.tmdb.org/t/p/w500//'
 
 
 export const commomStyle = StyleSheet.create({
@@ -18,28 +19,51 @@ export const commomStyle = StyleSheet.create({
 
 export const listRawData = [
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something one"
     },
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something two"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something two"
     },
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something three"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something three"
     },
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something four"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something four"
     },
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something five"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something five"
     },
     {
-      imageUrl: "http://via.placeholder.com/160x160",
-      title: "something six"
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something six"
     }
-  ];
-  
+    , {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something"
+    },
+    {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something two"
+    },
+    {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something three"
+    },
+    {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something four"
+    },
+    {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something five"
+    },
+    {
+        poster_path: "http://via.placeholder.com/160x160",
+        title: "something six"
+    }
+];

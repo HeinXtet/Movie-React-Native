@@ -11,7 +11,7 @@ import { goDetail, hideTopBar, openDrawer } from '../routes/routes';
 import IconM from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux';
 import { searchMovie } from '../store/actions/search/searchAction'
-import {Navigation} from 'react-native-navigation'
+import { Navigation } from 'react-native-navigation'
 import { primaryColor } from '../utils/constant';
 class Search extends React.PureComponent {
 
@@ -37,7 +37,6 @@ class Search extends React.PureComponent {
                             this.props.search("SearchValue " + Math.random().toString())}>
                         <IconM name="menu" size={30} color='#f33' />
                     </TouchableOpacity>
-
                     <TouchableOpacity onPress={() => goDetail(this.props.componentId)}><IconM name="menu" size={30} color='#f33' /></TouchableOpacity>
                 </View>
             </SafeAreaView>

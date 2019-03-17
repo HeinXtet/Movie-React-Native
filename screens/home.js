@@ -6,75 +6,113 @@ import { goDetail, hideTopBar, openDrawer } from '../routes/routes';
 import TopBar from '../components/topbar'
 import { fetchData } from '../store/actions/home/homeAction';
 import { connect } from 'react-redux';
-import { primaryColor, commomStyle } from '../utils/constant'
-
+import { primaryColor, commomStyle, baseImgPth } from '../utils/constant'
 import Banner, { IndicaterAlign, IndicaterType } from 'react-native-whc-banner'
 import { listRawData } from '../utils/constant';
+import MovieList from '../components/movieList';
+import ApiService from '../network/apiService';
+import Loading from '../components/loading';
+import ErrorView from '../components/errorView';
 
 
 class Home extends React.PureComponent {
+
     async componentWillMount() {
         hideTopBar(this.props.componentId)
+        ApiService.get('popular')
+            .then(response => {
+                this.setState({
+                    popularList: response.results,
+                })
+                ApiService.get('top_rated')
+                    .then(response => {
+                        this.setState({
+                            lastestList: response.results,
+                        })
+
+                        ApiService.get('upcoming')
+                            .then(response => {
+                                this.setState({
+                                    isLoading: false,
+                                    isError: false,
+                                    bannerList: response.results,
+                                })
+                            }).catch(error => {
+                                this.setState({
+                                    isError: true,
+                                    errorMessage: error
+                                })
+                            })
+                    }).catch(error => {
+                        this.setState({
+                            isError: true,
+                            errorMessage: error
+                        })
+                    })
+            }).catch(error => {
+                this.setState({
+                    isError: true,
+                    errorMessage: error
+                })
+            })
     }
 
     constructor(props) {
         super(props)
         Navigation.events().bindComponent(this);
+        this.state = {
+            isLoading: true,
+            isError: false,
+            popularList: [],
+            lastestList: [],
+            bannerList: [],
+            errorMessage: ''
+        }
     }
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: primaryColor, flex: 1, flexDirection: 'column' }}>
                 <TopBar title='Home' humbergerPress={() => openDrawer()} />
-                <ScrollView style={styles.container}>
-                    <View style={styles.bannerContent} >
-                        <Banner autoLoop={true} style={styles.banner}>
-                            <View style={{ width: Dimensions.get('screen').width}}>
-                                <Image style={{ width: "100%", height: '100%', flex: 0 }} source={{ uri: listRawData[0].imageUrl }} />
+                {this.state.isLoading ?
+                    <Loading /> :
+                    this.state.isError ?
+                        <ErrorView errorMessage={this.state.errorMessage} /> :
+                        <ScrollView style={styles.container}>
+                            <View style={styles.bannerContent} >
+                                <Banner autoLoop={true} style={styles.banner}>
+                                    {this.state.bannerList.map((item, index) => {
+                                        return (<View key={
+                                            item.id.toString() + item.title + index
+                                        } style={{ width: Dimensions.get('screen').width }}>
+                                            <Image style={{ width: "100%", height: '100%', flex: 0 }}
+                                                source={{
+                                                    uri:
+                                                        baseImgPth + item.backdrop_path
+                                                }} />
+                                        </View>
+                                        )
+                                    })}
+                                </Banner>
                             </View>
-                            <View style={{ width: Dimensions.get('screen').width}}>
-                                <Image style={{ width: "100%", height: '100%', flex: 0 }} source={{ uri: listRawData[1].imageUrl }} />
+                            <View style={styles.popular}>
+                                <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
+                                    Popular Movies
+                        </Text>
+                                <MovieList listData={this.state.popularList} />
                             </View>
-                        </Banner>
-                    </View>
-                    <View style={styles.popular}>
-                        <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
-                            Popular Movies
+                            <View style={styles.latest}>
+                                <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
+                                    Top Rated Movies
                         </Text>
-                        <FlatList
-                            horizontal={true}
-                            data={listRawData}
-                            renderItem={({ item }) => {
-                                return (
-                                    <View style={{ width: Dimensions.get('screen').width / 3, margin: 8 }}>
-                                        <Image style={{ width: "100%", height: '100%', flex: 0 }} source={{ uri: item.imageUrl }} />
-                                    </View>
-                                )
-                            }}
-                            keyExtractor={(item, index) => index}
-                        />
-                    </View>
-                    <View style={styles.latest}>
-                        <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
-                            Latest Movies
-                        </Text>
-                        <FlatList
-                            horizontal={true}
-                            data={listRawData}
-                            renderItem={({ item }) => {
-                                return (
-                                    <View style={{ width: Dimensions.get('screen').width / 3, margin: 8 }}>
-                                        <Image style={{ width: "100%", height: '100%', flex: 0 }} source={{ uri: item.imageUrl }} />
-                                    </View>
-                                )
-                            }}
-                            keyExtractor={(item, index) => index}
-                        />
-                    </View>
-                </ScrollView>
+                                <MovieList listData={this.state.lastestList} />
+                            </View>
+                        </ScrollView>}
+
             </SafeAreaView>
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -96,7 +134,7 @@ const styles = StyleSheet.create({
     popular: {
         width: "100%",
         flexDirection: 'column',
-        aspectRatio: 1.8,
+        aspectRatio: 1.7,
         backgroundColor: "white"
     },
     latest: {
@@ -112,7 +150,6 @@ const styles = StyleSheet.create({
         width: "30%",
         backgroundColor: 'red'
     }
-
 })
 
 
