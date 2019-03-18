@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Dimensions, ActivityIndicator } from 'react-nat
 import { Image } from 'react-native-elements';
 import { Card } from 'react-native-elements'
 import { baseImgPth } from '../utils/constant'
+import { Navigation } from 'react-native-navigation'
 
 
 class MovieItem extends React.PureComponent {
@@ -12,33 +13,31 @@ class MovieItem extends React.PureComponent {
 
     render() {
         return (
-            <View key={this.props.item.id.toString()}
-                style={{
+            <Card
+                key={this.props.item.id.toString() + Math.random().toString() + this.props.item.title}
+                containerStyle={{
+                    borderRadius: 0,
+                    elevation: 4,
+                    overflow: 'hidden',
+                    padding: 0,
+                    height: '93%',
                     width: Dimensions.get('screen').width / 3,
                     margin: 8,
-                    borderRadius : 8,
-
-                }}>
-                
-                <Card
-                    containerStyle={{
-                        borderRadius: 4,
-                        elevation: 8,
-                        padding: 0,
-
-                        flex: 0,
-                        margin: 0,
-                    }} >
+                    borderRadius: 8,
+                }} >
+                <Navigation.Element elementId={this.props.item.id.toString()}>
                     <Image
                         style={{
                             width: "100%",
                             height: '100%',
                             flex: 0
                         }}
-
                         source={{ uri: baseImgPth + this.props.item.poster_path }}
                         PlaceholderContent={<ActivityIndicator />}
                     />
+                </Navigation.Element>
+
+                <View style={{ borderBottomLeftRadius: 4, borderTopRightRadius: 4 }}>
                     <Text
                         numberOfLines={1}
                         ellipsizeMode='tail'
@@ -47,8 +46,9 @@ class MovieItem extends React.PureComponent {
                         }>
                         {this.props.item.title.toString()}
                     </Text>
-                </Card>
-            </View >
+                </View>
+
+            </Card>
         )
     }
 }
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
         width: "100%",
         color: 'white',
         position: 'absolute',
-        padding: 8,
+        padding: 4,
+        fontSize: 12,
         alignSelf: 'center',
         bottom: 0,
         backgroundColor: 'grey'

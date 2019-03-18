@@ -22,17 +22,31 @@ export const openDrawer = () => {
     })
 }
 
-export const goDetail = (componentId) => {
+export const goDetail = (componentId, data) => {
     Navigation.push(componentId, {
         component: {
             name: 'detail',
             passProps: {
-                text: 'Pushed screen'
+                payload: data
             },
             options: {
+                customTransition: {
+                    animations: [
+                        {
+                            type: 'sharedElement',
+                            fromId:  data.id.toString(), toId: data.id.toString(),
+                            startDelay: 0, springVelocity: 0.2, duration: 0.5
+                        }
+                    ],
+                    duration: 0.8
+                },
                 topBar: {
+                    backButton  :{
+                        color : "white"
+                    },
                     title: {
-                        text: 'Detail',
+                        text:data.title,
+                        alignment : 'fill',
                         color: 'white'
                     },
                 }

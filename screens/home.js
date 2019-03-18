@@ -57,6 +57,10 @@ class Home extends React.PureComponent {
             })
     }
 
+
+
+
+
     constructor(props) {
         super(props)
         Navigation.events().bindComponent(this);
@@ -69,6 +73,11 @@ class Home extends React.PureComponent {
             errorMessage: ''
         }
     }
+
+    goDetail = (data) => {
+        goDetail(this.props.componentId, data)
+    }
+
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: primaryColor, flex: 1, flexDirection: 'column' }}>
@@ -80,31 +89,36 @@ class Home extends React.PureComponent {
                         <ScrollView style={styles.container}>
                             <View style={styles.bannerContent} >
                                 <Banner autoLoop={true} style={styles.banner}>
-                                    {this.state.bannerList.map((item, index) => {
-                                        return (<View key={
-                                            item.id.toString() + item.title + index
-                                        } style={{ width: Dimensions.get('screen').width }}>
-                                            <Image style={{ width: "100%", height: '100%', flex: 0 }}
-                                                source={{
-                                                    uri:
-                                                        baseImgPth + item.backdrop_path
-                                                }} />
-                                        </View>
+                                    {this.state.bannerList.slice(0, 5).map((item, index) => {
+                                        return (
+                                            <TouchableOpacity onPress={() => this.goDetail(item)}>
+
+                                                <View
+                                                    key={item.id.toString() + Math.random().toString() + item.title + index}
+                                                    style={{ width: Dimensions.get('screen').width }}>
+                                                    <Image style={{ width: "100%", height: '100%', flex: 0 }}
+                                                        source={{
+                                                            uri:
+                                                                baseImgPth + item.backdrop_path
+                                                        }} />
+                                                </View>
+                                            </TouchableOpacity>
+
                                         )
                                     })}
                                 </Banner>
                             </View>
                             <View style={styles.popular}>
-                                <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
+                                <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
                                     Popular Movies
-                        </Text>
-                                <MovieList listData={this.state.popularList} />
+                                 </Text>
+                                <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.popularList} />
                             </View>
                             <View style={styles.latest}>
-                                <Text style={{ padding: 8, fontSize: 16, fontWeight: 'bold' }}>
+                                <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
                                     Top Rated Movies
                         </Text>
-                                <MovieList listData={this.state.lastestList} />
+                                <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.lastestList} />
                             </View>
                         </ScrollView>}
 
@@ -117,7 +131,7 @@ class Home extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 50,
+        marginBottom: 48,
         backgroundColor: 'white',
     },
     banner: {
@@ -134,13 +148,13 @@ const styles = StyleSheet.create({
     popular: {
         width: "100%",
         flexDirection: 'column',
-        aspectRatio: 1.7,
+        aspectRatio: 1.6,
         backgroundColor: "white"
     },
     latest: {
         width: "100%",
         flexDirection: 'column',
-        aspectRatio: 1.8,
+        aspectRatio: 1.6,
         backgroundColor: "white"
     },
 
@@ -148,7 +162,7 @@ const styles = StyleSheet.create({
         margin: 8,
         flex: 1,
         width: "30%",
-        backgroundColor: 'red'
+        backgroundColor: 'white'
     }
 })
 
