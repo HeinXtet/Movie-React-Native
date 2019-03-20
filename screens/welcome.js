@@ -10,36 +10,36 @@ class Welcome extends React.PureComponent {
     async componentDidMount() {
         Navigation.mergeOptions(this.props.componentId, {
             topBar: {
-                visible: false
+                visible: false,
+                height: 0
             }
         });
         setTimeout(() => {
             goMain()
-        }, 2000);
+        }, 1000);
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Splash Page</Text>
-                <Loading />
+                <Text style={{
+                    textAlign: 'center',
+                    color : "white",
+                    fontSize : 18,
+                    fontWeight : 'bold'
+                }}>Splash Page</Text>
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
         flex: 1,
         backgroundColor: primaryColor,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    loadingText: {
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 14,
-    }
+    
 })
 
 export default Welcome;

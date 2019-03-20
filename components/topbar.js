@@ -29,7 +29,7 @@ class TopBar extends React.PureComponent {
                 <View style={{ width: '100%', position: 'absolute', zIndex: 1 }}>
                     <TouchableOpacity
                         style={{ margin: 8, zIndex: 2, alignSelf: 'flex-end' }}
-                        onPress={this.props.humbergerPress} >
+                        onPress={this.props.openSearch} >
                         <IconM name='search' size={30} color='white' />
                     </TouchableOpacity>
                 </View>

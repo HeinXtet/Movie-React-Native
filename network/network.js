@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native'
  * Request Wrapper with default success/error actions
  */
 
-let baseURL = 'https://api.themoviedb.org/3/movie'
+let baseURL = 'https://api.themoviedb.org/3'
 
 
 const request = async function (options, isHeader = false) {

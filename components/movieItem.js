@@ -16,7 +16,6 @@ class MovieItem extends React.PureComponent {
             <Card
                 key={this.props.item.id.toString() + Math.random().toString() + this.props.item.title}
                 containerStyle={{
-                    borderRadius: 0,
                     elevation: 4,
                     overflow: 'hidden',
                     padding: 0,

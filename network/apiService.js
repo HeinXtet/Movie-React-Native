@@ -3,10 +3,21 @@ let apiKey = '961277648f1e28c74788bade62b3b24c'
 
 function get(path) {
     return request({
-        url: path + "?api_key="+apiKey,
+        url: path + "?api_key=" + apiKey,
         method: 'GET'
     });
 }
+
+function search(query, page) {
+    let url = "search/movie?api_key=" + apiKey + "&query=" +
+        query +
+        "&page=" + page + "&include_adult=true"
+    return request({
+        url: url,
+        method: 'GET'
+    });
+}
+
 
 function create({ subject, content }) {
     return request({
@@ -20,7 +31,7 @@ function create({ subject, content }) {
 }
 
 const ExampleService = {
-    get, create
+    get, create,search
 }
 
 export default ExampleService;
