@@ -1,5 +1,7 @@
 import { Navigation } from "react-native-navigation";
 import { primaryColor, primaryDarkColor } from '../utils/constant'
+import IconM from 'react-native-vector-icons/MaterialIcons'
+import { Icon } from "react-native-elements";
 export const hideTopBar = (componentId) => {
     Navigation.mergeOptions(componentId, {
         topBar: {
@@ -53,7 +55,6 @@ export const goCastDetail = (componentId, item) => {
                 cast: item
             },
             options: {
-
                 topBar: {
                     backButton: {
                         showTitle: false,
@@ -64,6 +65,10 @@ export const goCastDetail = (componentId, item) => {
                         alignment: 'fill',
                         color: 'white'
                     },
+
+                },
+                bottomTabs: {
+                    visible: false
                 }
             }
         }
@@ -167,7 +172,7 @@ export const goMain = () => Navigation.setRoot({
                                                     selectedTextColor: primaryDarkColor,
                                                     selectedIconColor: primaryDarkColor,
                                                     icon: {
-                                                        uri: 'baseline_search_24'
+                                                        uri: 'baseline_category_24'
                                                     }
                                                 }
                                             }
@@ -182,20 +187,20 @@ export const goMain = () => Navigation.setRoot({
                                 children: [
                                     {
                                         component: {
-                                            name: 'genre',
+                                            name: 'person',
                                             options: {
                                                 topBar: {
                                                     visible: false,
                                                     height: 0
                                                 },
                                                 bottomTab: {
-                                                    text: 'Genre',
+                                                    text: 'Person',
                                                     fontSize: 12,
                                                     textColor: "white",
                                                     selectedTextColor: primaryDarkColor,
                                                     selectedIconColor: primaryDarkColor,
                                                     icon: {
-                                                        uri: 'baseline_home_24'
+                                                        uri: 'baseline_person_24'
                                                     }
                                                 }
                                             }

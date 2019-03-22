@@ -8,6 +8,15 @@ function get(path) {
     });
 }
 
+function person(page) {
+    return (
+        request({
+            url: 'person/popular?api_key=' + apiKey + '&language=en-US&page=' + page,
+            method: 'GET'
+        })
+    )
+}
+
 function search(query, page) {
     let url = "search/movie?api_key=" + apiKey + "&query=" +
         query +
@@ -31,7 +40,7 @@ function create({ subject, content }) {
 }
 
 const ExampleService = {
-    get, create,search
+    get, create, search,person
 }
 
 export default ExampleService;

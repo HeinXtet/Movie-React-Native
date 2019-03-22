@@ -9,6 +9,7 @@ import CastList from '../components/castList'
 import { goCastDetail } from '../routes/routes';
 class Detail extends React.PureComponent {
 
+    _isMounted = false;
     constructor(props) {
         super(props)
     }
@@ -28,13 +29,21 @@ class Detail extends React.PureComponent {
     _apiRequest() {
         ApiService.get("movie/" + this.props.payload.id + "/credits")
             .then(response => {
+                if(this._isMounted){
+
                 this.setState({
                     castList: response.cast
                 })
+            }
             })
     }
 
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
     async componentDidMount() {
+        this._isMounted = true
         NetInfo.isConnected.fetch().then(isConnected => {
             if (isConnected) {
                 this._apiRequest()

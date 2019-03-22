@@ -15,62 +15,80 @@ import ErrorView from '../components/errorView';
 
 
 class Home extends React.PureComponent {
+
+    _isMounted = false
+
     apiRequest() {
         ApiService.get('movie/popular')
             .then(response => {
-                this.setState({
-                    popularList: response.results,
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        popularList: response.results,
+                    })
+                }
                 ApiService.get('movie/top_rated')
                     .then(response => {
-                        this.setState({
-                            lastestList: response.results,
-                        })
+                        if (this._isMounted) {
+                            this.setState({
+                                lastestList: response.results,
+                            })
+                        }
 
                         ApiService.get('movie/upcoming')
                             .then(response => {
-                                this.setState({
-                                    isLoading: false,
-                                    isError: false,
-                                    bannerList: response.results,
-                                })
+                                if (this._isMounted) {
+                                    this.setState({
+                                        isLoading: false,
+                                        isError: false,
+                                        bannerList: response.results,
+                                    })
+                                }
                             }).catch(error => {
-                                this.setState({
-                                    isError: true,
-                                    errorMessage: error
-                                })
+                                if (this._isMounted) {
+
+                                    this.setState({
+                                        isError: true,
+                                        errorMessage: error
+                                    })
+                                }
                             })
                     }).catch(error => {
-                        this.setState({
-                            isError: true,
-                            errorMessage: error
-                        })
+                        if (this._isMounted) {
+                            this.setState({
+                                isError: true,
+                                errorMessage: error
+                            })
+                        }
                     })
             }).catch(error => {
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                    errorMessage: error
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        isLoading: false,
+                        isError: true,
+                        errorMessage: error
+                    })
+                }
             })
     }
 
     async componentWillMount() {
+        this._isMounted = true
         hideTopBar(this.props.componentId)
         NetInfo.isConnected.fetch().then(isConnected => {
-            isConnected ? this.apiRequest() : this.setState({
-                isError: true,
-                isLoading: false,
-                errorMessage: "No internet connection"
-
-            })
-
+            isConnected ? this.apiRequest() :
+                (this._isMounted) ?
+                    this.setState({
+                        isError: true,
+                        isLoading: false,
+                        errorMessage: "No internet connection"
+                    }) : null
         })
     }
 
 
-
-
+    componentWillUnmount() {
+        this._isMounted = false
+    }
 
     constructor(props) {
         super(props)
@@ -101,10 +119,10 @@ class Home extends React.PureComponent {
                         <ErrorView errorMessage={this.state.errorMessage} /> :
                         <ScrollView style={styles.container}>
                             <View style={styles.bannerContent} >
-                                <Banner autoLoop={true} style={styles.banner}>
+                                <Banner  autoLoop={true} style={styles.banner}>
                                     {this.state.bannerList.slice(0, 5).map((item, index) => {
                                         return (
-                                            <TouchableOpacity onPress={() => this.goDetail(item)}>
+                                            <TouchableOpacity  onPress={() => this.goDetail(item)}>
                                                 <View
                                                     key={item.id.toString() + Math.random().toString() + item.title + index}
                                                     style={{ width: Dimensions.get('screen').width }}>

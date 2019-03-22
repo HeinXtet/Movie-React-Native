@@ -3,7 +3,7 @@ import Welcome from '../screens/welcome';
 import Home from '../screens/home';
 import React from 'react';
 import Series from '../screens/series';
-import Genre from '../screens/genre';
+import Person from '../screens/person';
 import Detail from '../screens/detail';
 import configureStore from '../store/store';
 import { Provider } from 'react-redux';
@@ -28,10 +28,13 @@ export const register = () => {
     </Provider>
   ), () => Home);
 
-  Navigation.registerComponent('genre', () => (props) => (
-    <Provider store={store}>
-      <Genre {...props} />
-    </Provider>
-  ), () => Genre);
+  
+  Navigation.registerComponent('person',()=>Person)
+
+  // Navigation.registerComponent('person', () => (props) => (
+  //   <Provider store={store}>
+  //     <Person {...props} />
+  //   </Provider>
+  // ), () => Person);
 
 }

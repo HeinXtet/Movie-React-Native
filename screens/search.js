@@ -11,6 +11,9 @@ import { Card, Image } from 'react-native-elements';
 const height = Dimensions.get('screen').height
 import { goDetail } from '../routes/routes'
 class Search extends React.PureComponent {
+    page = 1
+    mounted = false
+    totalCount = 20
 
     constructor(props) {
         super(props)
@@ -19,46 +22,66 @@ class Search extends React.PureComponent {
         search: '',
         movieList: [],
         isError: false,
+        isLoadMore: false,
         isLoading: false,
-        page: 1
     };
 
 
-    async _searchQuery(query) {
-        if (query !== "") {
-            if (this.state.page == 1) {
-                this.setState({
-                    isLoading: true,
-                })
+    _searchQuery(query) {
+        if (this.totalCount >= this.page && !this.isLoadMore) {
+            if (query !== "") {
+                if (this.page == 1) {
+                    this.setState({
+                        isLoading: true,
+                    })
+                } else {
+                    this.setState({
+                        isLoadMore: true
+                    })
+
+                }
+                ApiService.search(query, this.page)
+                    .then(value => {
+                        if (this.page == 1) {
+                            if (value.results.length !== 0) {
+                                this.page++
+
+                                this.setState({
+                                    isLoading: false,
+                                    movieList: value.results,
+                                    isError: false,
+                                })
+                            } else {
+                                this.setState({
+
+                                    isLoading: false,
+                                    isError: true,
+                                })
+                            }
+
+                        } else {
+                            this.setState({
+                                isLoadMore: false,
+                                movieList: this.state.movieList.concat(value.results),
+                            })
+                            this.page++
+
+                        }
+
+                    })
+                    .catch(e => {
+
+                    })
             }
-            ApiService.search(query, this.state.page)
-                .then(value => {
-
-                    if (this.state.page == 1) {
-                        this.setState({
-                            isLoading: false,
-                            movieList: value.results,
-                            page: this.state.page + 1
-                        })
-                    } else {
-                        this.setState({
-                            movieList: this.state.movieList.concat(value.results),
-                            page: this.state.page + 1
-
-
-
-                        })
-                    }
-
-                })
-                .catch(e => {
-
-                })
         }
     }
 
+    componentWillUnmount() {
+        this.mounted = false;
+    }
 
     componentDidMount() {
+        this.mounted = true
         Navigation.mergeOptions(this.props.componentId, {
             sideMenu: {
                 left: {
@@ -73,15 +96,20 @@ class Search extends React.PureComponent {
         this.setState({ search: value });
     };
 
+    async _searchMovie() {
+        this.setState({
+            movieList: [],
+        })
+        this.page = 1
+        await this._searchQuery(this.state.search)
+        // alert("page " + this.page + "lenght " + this.state.movieList.length)
+    }
+
     _search() {
         return (
             <SearchBar
                 searchSubmit={() => {
-                    this.setState({
-                        movieList : [],
-                        page: 1
-                    })
-                    this._searchQuery(this.state.search)
+                    this._searchMovie()
                 }}
                 back={() => Navigation.pop(this.props.componentId)}
                 initValue={this.state.search}
@@ -142,12 +170,20 @@ class Search extends React.PureComponent {
         )
     }
 
+    _loadMore() {
+        return (
+            <View style={styles.loadMore}>
+                <ActivityIndicator color= 'red' />
+            </View>
+        )
+    }
+
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={{ flex: 1, backgroundColor: 'white', marginBottom: 62, paddingBottom: 16, }}>
                 <SafeAreaView style={{
                     backgroundColor: primaryColor, marginBottom: 58,
-                    marginBottom: 56,
+
                 }}>
                     {this._search()}
                     <View
@@ -157,11 +193,10 @@ class Search extends React.PureComponent {
                             backgroundColor: 'white'
                         }}>
                         {this.state.isLoading ?
-
                             <Loading />
-                            : this.state.isError ? <ErrorView /> : this.gridList()}
+                            : this.state.isError ? <ErrorView errorMessage={'Nothing to show'} /> : this.gridList()}
 
-
+                        {this.state.isLoadMore ? this._loadMore() : <View />}
                     </View>
                 </SafeAreaView>
             </View>
@@ -169,12 +204,21 @@ class Search extends React.PureComponent {
     }
 }
 
+
+
 const styles = StyleSheet.create({
     imageThumbnail: {
         height: '100%',
         width: "100%",
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    loadMore: {
+        backgroundColor: "grey",
+        alignItems: 'center',
+        justifyContent: "center",
+        padding: 16,
+        width: "100%"
     },
     text: {
         width: "100%",

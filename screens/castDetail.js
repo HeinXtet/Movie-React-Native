@@ -17,6 +17,8 @@ class CastDetail extends React.PureComponent {
         super(props)
     }
 
+    _Mounted = false
+
     state = {
         errorMessage: '',
         isLoading: true,
@@ -27,28 +29,43 @@ class CastDetail extends React.PureComponent {
     _apiRequest() {
         ApiService.get("person/" + this.props.cast.id)
             .then(response => {
-                this.setState({
-                    isLoading: false,
-                    isError: false,
-                    castDetail: response,
-                })
+                if (this._Mounted) {
+                    this.setState({
+                        isLoading: false,
+                        isError: false,
+                        castDetail: response,
+                    })
+                }
+
             }).catch(error => {
-                this.setState({
-                    isError: true,
-                    isLoading: false,
-                    errorMessage: error.toString()
-                })
+                if (this._Mounted) {
+                    this.setState({
+                        isError: true,
+                        isLoading: false,
+                        errorMessage: error.toString()
+                    })
+                }
+
             })
 
         ApiService.get("/person/" + this.props.cast.id + "/movie_credits")
             .then(response => {
-                this.setState({
-                    movieList: response.cast
-                })
+                if (this._Mounted) {
+
+                    this.setState({
+                        movieList: response.cast
+                    })
+                }
+
             })
     }
 
+    componentWillUnmount() {
+        this._Mounted = false
+    }
+
     async componentDidMount() {
+        this._Mounted = true
         NetInfo.isConnected.fetch().then(isConnected => {
             isConnected ? this._apiRequest() : this.setState({
                 isError: true,
@@ -63,6 +80,9 @@ class CastDetail extends React.PureComponent {
                 left: {
                     enabled: false
                 }
+            },
+            bottomTabs : {
+                visible : false
             }
         })
     }
