@@ -29,12 +29,12 @@ class Detail extends React.PureComponent {
     _apiRequest() {
         ApiService.get("movie/" + this.props.payload.id + "/credits")
             .then(response => {
-                if(this._isMounted){
+                if (this._isMounted) {
 
-                this.setState({
-                    castList: response.cast
-                })
-            }
+                    this.setState({
+                        castList: response.cast
+                    })
+                }
             })
     }
 
@@ -48,21 +48,8 @@ class Detail extends React.PureComponent {
             if (isConnected) {
                 this._apiRequest()
             }
-        })
-        Navigation.mergeOptions(this.props.componentId, {
-            bottomTabs: {
-                visible: false,
-            },
-            sideMenu: {
-                left: {
-                    enabled: false
-                }
-            }
-        })
-
-
-
-        //alert("dtail id " + this.props.payload.id)
+        }) 
+     
     }
 
 
@@ -74,7 +61,7 @@ class Detail extends React.PureComponent {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <SafeAreaView>
-                    <ScrollView >
+                    <ScrollView automaticallyAdjustContentInsets={false}>
                         <View style={{ flexDirection: 'column' }}>
                             <View style={styles.container}>
                                 <Image
@@ -99,7 +86,7 @@ class Detail extends React.PureComponent {
                                     height: 200,
                                     width: 150
                                 }} >
-                                <Navigation.Element elementId={this.props.payload.id + this.props.payload.title}>
+                                <Navigation.Element elementId='detail_image'>
                                     <Image
                                         style={{
                                             width: '100%',

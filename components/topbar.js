@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { primaryColor } from '../utils/constant'
-
+import { openDrawer, goSearch } from '../routes/routes'
 
 class TopBar extends React.PureComponent {
     constructor(props) {
@@ -14,7 +14,7 @@ class TopBar extends React.PureComponent {
             <View style={styles.topBar}>
                 <TouchableOpacity
                     style={{ margin: 8, zIndex: 2 }}
-                    onPress={this.props.humbergerPress} >
+                    onPress={() => openDrawer(true)} >
                     <IconM name='menu' size={30} color='white' />
                 </TouchableOpacity>
                 <Text style={{
@@ -29,7 +29,7 @@ class TopBar extends React.PureComponent {
                 <View style={{ width: '100%', position: 'absolute', zIndex: 1 }}>
                     <TouchableOpacity
                         style={{ margin: 8, zIndex: 2, alignSelf: 'flex-end' }}
-                        onPress={this.props.openSearch} >
+                        onPress={()=>goSearch(this.props.componentId)} >
                         <IconM name='search' size={30} color='white' />
                     </TouchableOpacity>
                 </View>

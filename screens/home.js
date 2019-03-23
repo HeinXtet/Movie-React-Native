@@ -111,53 +111,60 @@ class Home extends React.PureComponent {
     }
     render() {
         return (
-            <SafeAreaView style={{ backgroundColor: primaryColor, flex: 1, flexDirection: 'column' }}>
-                <TopBar title='Home' humbergerPress={() => openDrawer()} openSearch={() => this.goSearch()} />
-                {this.state.isLoading ?
-                    <Loading /> :
-                    this.state.isError ?
-                        <ErrorView errorMessage={this.state.errorMessage} /> :
-                        <ScrollView style={styles.container}>
-                            <View style={styles.bannerContent} >
-                                <Banner  autoLoop={true} style={styles.banner}>
-                                    {this.state.bannerList.slice(0, 5).map((item, index) => {
-                                        return (
-                                            <TouchableOpacity  onPress={() => this.goDetail(item)}>
-                                                <View
-                                                    key={item.id.toString() + Math.random().toString() + item.title + index}
-                                                    style={{ width: Dimensions.get('screen').width }}>
-                                                    <Navigation.Element
-                                                        style={{ width: "100%", height: '100%', flex: 0 }}
-                                                        elementId={item.id.toString()}>
-                                                        <Image style={{ width: "100%", height: '100%', flex: 0 }}
-                                                            source={{
-                                                                uri:
-                                                                    baseImgPth + item.backdrop_path
-                                                            }} />
-                                                    </Navigation.Element>
+            <View style={{ backgroundColor: 'white',flex:1 }}>
 
-                                                </View>
-                                            </TouchableOpacity>
+                <SafeAreaView style={{
+                    backgroundColor: primaryColor,
+                    flexDirection: 'column'
+                }}>
+                    <View style={{flexDirection :'column',height :"100%"}}>
+                    <TopBar title='Home'  componentId ={this.props.componentId}/>
+                    {this.state.isLoading ?
+                        <Loading /> :
+                        this.state.isError ?
+                            <ErrorView errorMessage={this.state.errorMessage} /> :
+                            <ScrollView style={styles.container}>
+                                <View style={styles.bannerContent} >
+                                    <Banner autoLoop={true} style={styles.banner}>
+                                        {this.state.bannerList.slice(0, 5).map((item, index) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => this.goDetail(item)}>
+                                                    <View
+                                                        key={item.id.toString() + Math.random().toString() + item.title + index}
+                                                        style={{ width: Dimensions.get('screen').width }}>
+                                                        <Navigation.Element elementId={item.id.toString()}
+                                                            style={{ width: "100%", height: '100%', flex: 0 }}
+                                                            elementId={item.id.toString()}>
+                                                            <Image style={{ width: "100%", height: '100%', flex: 0 }}
+                                                                source={{
+                                                                    uri:
+                                                                        baseImgPth + item.backdrop_path
+                                                                }} />
+                                                        </Navigation.Element>
 
-                                        )
-                                    })}
-                                </Banner>
-                            </View>
-                            <View style={styles.popular}>
-                                <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
-                                    Popular Movies
+                                                    </View>
+                                                </TouchableOpacity>
+
+                                            )
+                                        })}
+                                    </Banner>
+                                </View>
+                                <View style={styles.popular}>
+                                    <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
+                                        Popular Movies
                                  </Text>
-                                <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.popularList} />
-                            </View>
-                            <View style={styles.latest}>
-                                <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
-                                    Top Rated Movies
+                                    <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.popularList} />
+                                </View>
+                                <View style={styles.latest}>
+                                    <Text style={{ padding: 8, fontSize: 16, color: 'black', fontWeight: 'bold' }}>
+                                        Top Rated Movies
                         </Text>
-                                <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.lastestList} />
+                                    <MovieList clickItem={(data) => this.goDetail(data)} listData={this.state.lastestList} />
+                                </View>
+                            </ScrollView>}
                             </View>
-                        </ScrollView>}
-
-            </SafeAreaView>
+                </SafeAreaView>
+            </View>
         )
     }
 }
@@ -166,7 +173,6 @@ class Home extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 48,
         backgroundColor: 'white',
     },
     banner: {

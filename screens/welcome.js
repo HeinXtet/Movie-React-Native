@@ -8,27 +8,34 @@ import { primaryColor } from '../utils/constant';
 
 class Welcome extends React.PureComponent {
     async componentDidMount() {
-        Navigation.mergeOptions(this.props.componentId, {
-            topBar: {
-                visible: false,
-                height: 0
-            }
-        });
+
         setTimeout(() => {
             goMain()
         }, 1000);
     }
 
     render() {
+        Navigation.setDefaultOptions({
+            topBar: {
+                visible: false,
+                drawBehind: true,
+                animate: false,
+            },
+            bottomTabs: {
+                drawBehind: false,
+                backgroundColor: primaryColor
+            }
+        })
         return (
-            <View style={styles.container}>
+           
+            < View style = { styles.container } >
                 <Text style={{
                     textAlign: 'center',
-                    color : "white",
-                    fontSize : 18,
-                    fontWeight : 'bold'
-                }}>Splash Page</Text>
-            </View>
+                    color: "white",
+                    fontSize: 18,
+                    fontWeight: 'bold'
+                }}>Mov</Text>
+            </View >
         )
     }
 }
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    
+
 })
 
 export default Welcome;

@@ -12,12 +12,12 @@ export const hideTopBar = (componentId) => {
 
 
 
-export const openDrawer = () => {
+export const openDrawer = (isOpen) => {
     Navigation.mergeOptions('sideDrawer', {
         sideMenu: {
-            openGestureMode: 'entireScreen',
+        
             left: {
-                visible: true,
+                visible: isOpen,
                 enabled: true,
             }
         }
@@ -56,6 +56,12 @@ export const goCastDetail = (componentId, item) => {
             },
             options: {
                 topBar: {
+                    background: {
+                        color: primaryColor
+                    },
+                    drawBehind: false,
+                    visible: true,
+
                     backButton: {
                         showTitle: false,
                         color: "white"
@@ -76,6 +82,7 @@ export const goCastDetail = (componentId, item) => {
 }
 
 export const goDetail = (componentId, data) => {
+
     Navigation.push(componentId, {
         component: {
             name: 'detail',
@@ -83,36 +90,58 @@ export const goDetail = (componentId, data) => {
                 payload: data
             },
             options: {
-                customTransition: {
-                    animations: [
-                        {
-                            type: 'sharedElement',
-                            fromId: data.id.toString(), toId: data.id + data.title,
-                            startDelay: 0, springVelocity: 0.2, duration: 0.5
-                        }
-                    ],
-                    duration: 0.8
+                bottomTabs:{
+                    visible :false
                 },
+
                 topBar: {
+                    background: {
+                        color: primaryColor
+                    },
+                    drawBehind: true,
+                    visible: true,
+
                     backButton: {
-                        color: "white",
-                        showTitle: false
+                        showTitle: false,
+                        color: "white"
                     },
                     title: {
                         text: data.title,
                         alignment: 'fill',
                         color: 'white'
                     },
-                }
+
+                },
+            
+                // customTransition: {
+                    
+                //     animations: [
+                //         {
+                //             type: 'sharedElement',
+                //             fromId: data.id.toString(),
+                //             toId: 'detail_image',
+                //             startDelay: 0,
+                //             springVelocity: 0.2,
+                //             duration: 0.5
+                //         }
+                //     ],
+                //     duration: 0.8
+                // },
+                
+
             }
         }
     });
 }
 
-
-export const goMain = () => Navigation.setRoot({
+export const goCategory = () => Navigation.setRoot({
     root: {
         sideMenu: {
+            options: {
+                bottomTabs: {
+                    visible: false
+                }
+            },
             id: 'sideDrawer',
             left: {
                 component: {
@@ -120,8 +149,35 @@ export const goMain = () => Navigation.setRoot({
                 }
             },
             center: {
-                bottomTabs: {
+                component: {
+                    name: "Categories",
+                    options: {
+                        bottomTabs: {
+                            visible: false
+                        }
+                    }
+                },
+            },
 
+        },
+
+    }
+})
+
+export const goMain = () => Navigation.setRoot({
+    root: {
+
+        sideMenu: {
+            id: 'sideDrawer',
+            left: {
+                
+                component: {
+                    name: 'slidebar'
+                }
+            },
+
+            center: {
+                bottomTabs: {
                     id: 'BottomTabsId',
                     children: [
                         {
@@ -132,10 +188,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'home',
                                             options: {
-                                                topBar: {
-                                                    visible: false,
-                                                    height: 0
-                                                },
+                                                
                                                 bottomTab: {
                                                     fontSize: 12,
                                                     text: 'Home',
@@ -148,6 +201,7 @@ export const goMain = () => Navigation.setRoot({
                                                 }
                                             }
                                         },
+
                                     },
 
                                 ]
@@ -161,10 +215,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'series',
                                             options: {
-                                                topBar: {
-                                                    visible: false,
-                                                    height: 0
-                                                },
+                                                
                                                 bottomTab: {
                                                     text: 'Series',
                                                     textColor: 'white',
@@ -189,10 +240,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'person',
                                             options: {
-                                                topBar: {
-                                                    visible: false,
-                                                    height: 0
-                                                },
+                                               
                                                 bottomTab: {
                                                     text: 'Person',
                                                     fontSize: 12,
@@ -212,7 +260,8 @@ export const goMain = () => Navigation.setRoot({
                     ],
                 },
             }
-        }
+        },
+
     }
 }
 );

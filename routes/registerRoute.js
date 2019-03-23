@@ -7,9 +7,10 @@ import Person from '../screens/person';
 import Detail from '../screens/detail';
 import configureStore from '../store/store';
 import { Provider } from 'react-redux';
-import SideBar from '../slidebar';
+import SideBar from '../screens/slidebar';
 import CastDetail from '../screens/castDetail'
 import Search from '../screens/search';
+import Categories from '../screens/categories';
 
 
 
@@ -21,15 +22,17 @@ export const register = () => {
   Navigation.registerComponent('detail', () => Detail)
   Navigation.registerComponent('cast_detail', () => CastDetail)
   Navigation.registerComponent('search', () => Search)
+  Navigation.registerComponent('Categories', () => Categories)
 
+  
   Navigation.registerComponent('home', () => (props) => (
     <Provider store={store}>
       <Home {...props} />
     </Provider>
   ), () => Home);
 
-  
-  Navigation.registerComponent('person',()=>Person)
+
+  Navigation.registerComponent('person', () => Person)
 
   // Navigation.registerComponent('person', () => (props) => (
   //   <Provider store={store}>
