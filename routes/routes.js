@@ -2,6 +2,8 @@ import { Navigation } from "react-native-navigation";
 import { primaryColor, primaryDarkColor } from '../utils/constant'
 import IconM from 'react-native-vector-icons/MaterialIcons'
 import { Icon } from "react-native-elements";
+
+
 export const hideTopBar = (componentId) => {
     Navigation.mergeOptions(componentId, {
         topBar: {
@@ -15,7 +17,7 @@ export const hideTopBar = (componentId) => {
 export const openDrawer = (isOpen) => {
     Navigation.mergeOptions('sideDrawer', {
         sideMenu: {
-        
+
             left: {
                 visible: isOpen,
                 enabled: true,
@@ -26,7 +28,7 @@ export const openDrawer = (isOpen) => {
 
 
 export const goSearch = (componentId) => {
-    Navigation.push(componentId, {
+     Navigation.push(componentId, {
         component: {
             name: 'search',
             options: {
@@ -90,8 +92,9 @@ export const goDetail = (componentId, data) => {
                 payload: data
             },
             options: {
-                bottomTabs:{
-                    visible :false
+                bottomTabs: {
+                    visible: false,
+                    drawBehind: true
                 },
 
                 topBar: {
@@ -112,9 +115,9 @@ export const goDetail = (componentId, data) => {
                     },
 
                 },
-            
+
                 // customTransition: {
-                    
+
                 //     animations: [
                 //         {
                 //             type: 'sharedElement',
@@ -127,42 +130,49 @@ export const goDetail = (componentId, data) => {
                 //     ],
                 //     duration: 0.8
                 // },
-                
+
 
             }
         }
     });
 }
 
-export const goCategory = () => Navigation.setRoot({
-    root: {
-        sideMenu: {
-            options: {
-                bottomTabs: {
-                    visible: false
-                }
-            },
-            id: 'sideDrawer',
-            left: {
-                component: {
-                    name: 'slidebar'
-                }
-            },
-            center: {
-                component: {
-                    name: "Categories",
-                    options: {
-                        bottomTabs: {
-                            visible: false
-                        }
+export const goCategory = () => {
+ Navigation.setRoot({
+        root: {
+            sideMenu: {
+                options: {
+                    bottomTabs: {
+                        visible: false
                     }
                 },
+                id: 'sideDrawer',
+                left: {
+                    component: {
+                        name: 'slidebar'
+                    }
+                },
+                center: {
+                    stack: {
+                      options: {},
+                      children: [{
+                        component: {
+                            name  : "Categories",
+                            options : {
+                                visible : false
+                            }
+                        }
+                      }]
+                    }
+                  },
+                
+
             },
 
-        },
+        }
 
-    }
-})
+    })
+}
 
 export const goMain = () => Navigation.setRoot({
     root: {
@@ -170,13 +180,14 @@ export const goMain = () => Navigation.setRoot({
         sideMenu: {
             id: 'sideDrawer',
             left: {
-                
+
                 component: {
                     name: 'slidebar'
                 }
             },
 
             center: {
+
                 bottomTabs: {
                     id: 'BottomTabsId',
                     children: [
@@ -188,7 +199,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'home',
                                             options: {
-                                                
+
                                                 bottomTab: {
                                                     fontSize: 12,
                                                     text: 'Home',
@@ -215,7 +226,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'series',
                                             options: {
-                                                
+
                                                 bottomTab: {
                                                     text: 'Series',
                                                     textColor: 'white',
@@ -240,7 +251,7 @@ export const goMain = () => Navigation.setRoot({
                                         component: {
                                             name: 'person',
                                             options: {
-                                               
+
                                                 bottomTab: {
                                                     text: 'Person',
                                                     fontSize: 12,

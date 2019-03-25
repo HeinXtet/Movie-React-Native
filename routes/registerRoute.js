@@ -40,4 +40,4 @@ export const register = () => {
   //   </Provider>
   // ), () => Person);
 
-}
+} 

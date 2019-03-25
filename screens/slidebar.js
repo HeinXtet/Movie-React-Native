@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, TouchableOpacity, Text, View, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Platform, BackHandler, StyleSheet, TouchableOpacity, Text, View, SafeAreaView, ActivityIndicator } from 'react-native';
 import { primaryColor, primaryDarkColor } from "../utils/constant"
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -37,45 +37,28 @@ class SideBar extends Component {
 
   }
 
- async _handleRoute(name) {
-    Navigation.mergeOptions("sideDrawer",{
-        sideMenu : {
-          left : {
-            visible : false
-            
-          }
-        }
-    })
+  _handleRoute(name) {
+
     switch (name) {
       case "Categories":
-      
-        Navigation.setStackRoot("Tabs", {
+        if (global.screenId !== 'category') {
+          global.screenId = 'category'
+          try {
+            goCategory()
+          } catch (eee) {
 
-          component: {
-            name: "Categories",
-            options: {
-              topBar: {
-                visible : false,
-                drawBehind : true,
-              },
-              
-            }
           }
-        })
-       
+        }
         break;
       case "Home":
-        Navigation.setStackRoot("Tabs", {
-          component: {
-            name: "home",
-            options: {
-              topBar: {
-                visible : false,
-                drawBehind : true
-              }
-            }
+        if (global.screenId !== 'home') {
+          global.screenId = 'home'
+          try {
+            goMain()
+          } catch (eee) {
+
           }
-        })
+        }
       default:
         break;
     }
@@ -84,21 +67,25 @@ class SideBar extends Component {
   render() {
     return (
       <View style={{ backgroundColor: "white", flex: 1 }}>
-        <SafeAreaView style={styles.safe}>
-          <View style={styles.container}>
-          </View>
-          <View style={{ flex: 1, backgroundColor: 'white' }}>
-            {this._sidebarList.map((item, index) => {
-              return (
-                <View style={{}}>
+        <SafeAreaView style={{ backgroundColor: primaryColor }}>
+          <View style={{
+            backgroundColor: 'white',
+            flexDirection: 'column'
+          }}>
+            <View style={styles.container} />
+            <View style={{
+              height: '100%',
+              flexDirection: 'column'
+            }}>
+              {this._sidebarList.map((item, index) => {
+                return (
                   <TouchableOpacity onPress={() => this._handleRoute(item.name)} >
-                    <Text style={{ padding: 8, }}>{item.name}</Text>
+                    <Text style={{ padding: 16, }}>{item.name}</Text>
                     <View style={{ height: 1, backgroundColor: '#eee' }} />
                   </TouchableOpacity>
-                </View>
-
-              )
-            })}
+                )
+              })}
+            </View>
           </View>
 
         </SafeAreaView>

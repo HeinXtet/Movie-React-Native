@@ -71,7 +71,14 @@ class Home extends React.PureComponent {
             })
     }
 
-    async componentWillMount() {
+
+
+    componentWillUnmount() {
+        this._isMounted = false
+
+    }
+
+    componentDidMount(){
         this._isMounted = true
         hideTopBar(this.props.componentId)
         NetInfo.isConnected.fetch().then(isConnected => {
@@ -83,11 +90,13 @@ class Home extends React.PureComponent {
                         errorMessage: "No internet connection"
                     }) : null
         })
-    }
-
-
-    componentWillUnmount() {
-        this._isMounted = false
+        // Navigation.mergeOptions(this.props.componentId,{
+        //     sideMenu : {
+        //         left : {
+        //             visible : false
+        //         }
+        //     }
+        // });
     }
 
     constructor(props) {
@@ -110,6 +119,7 @@ class Home extends React.PureComponent {
         goSearch(this.props.componentId)
     }
     render() {
+       
         return (
             <View style={{ backgroundColor: 'white',flex:1 }}>
 

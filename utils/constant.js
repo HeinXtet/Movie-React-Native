@@ -7,6 +7,9 @@ export const primaryDarkColor = "#263238"
 export const baseImgPth = 'http://image.tmdb.org/t/p/w500//'
 
 
+export var currentComponentId = 'home'
+
+
 export const commomStyle = StyleSheet.create({
     topBar: {
         flexDirection: 'row',

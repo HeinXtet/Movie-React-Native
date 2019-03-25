@@ -1,7 +1,8 @@
-import { FetchData } from "../../actions/actionTypes";
+import { FetchData, DrawerClose } from "../../actions/actionTypes";
 
-const initState =  {
-    data  : ''
+const initState = {
+    data: '',
+    drawerOpen: false
 }
 
 const HomeReducer = (state = initState, action) => {
@@ -10,6 +11,11 @@ const HomeReducer = (state = initState, action) => {
             return {
                 ...state,
                 data: 'From Redux Store - ' + action.payload
+            }
+        case DrawerClose:
+            return {
+                ...state,
+                drawerOpen: true,
             }
         default:
             return state

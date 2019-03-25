@@ -15,19 +15,7 @@ class Welcome extends React.PureComponent {
     }
 
     render() {
-        Navigation.setDefaultOptions({
-            topBar: {
-                visible: false,
-                drawBehind: true,
-                animate: false,
-            },
-            bottomTabs: {
-                drawBehind: false,
-                backgroundColor: primaryColor
-            }
-        })
         return (
-           
             < View style = { styles.container } >
                 <Text style={{
                     textAlign: 'center',

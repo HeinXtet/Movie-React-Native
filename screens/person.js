@@ -136,7 +136,7 @@ class Person extends React.PureComponent {
     render() {
 
         return (
-            <View style={{ backgroundColor: 'white', flex: 1, marginBottom: 68, paddingBottom: 16 }}>
+            <View style={{ backgroundColor: 'white', flex: 1,paddingBottom:8}}>
                 <SafeAreaView style={{
                     backgroundColor: primaryColor,
                     flex: 1
