@@ -14,7 +14,7 @@ Sample GIF of IOS Side  ( iphone-X )
 
 ## Youtube Video 
 
-[![Image](https://i.ytimg.com/vi/UJOrzx_xG9g/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCYuEvnUCWZA4T76_47-IBx5E-M2w)](https://www.youtube.com/watch?v=UJOrzx_xG9g&t=30s)
+[![IMAGE ALT TEXT HERE](https://i.ytimg.com/vi/UJOrzx_xG9g/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCYuEvnUCWZA4T76_47-IBx5E-M2w)](https://www.youtube.com/watch?v=UJOrzx_xG9g&t=30s)
 
 
 ![Alt Text](https://raw.githubusercontent.com/HeinXtet/Movie-React-Native/master/github/mov.gif)
